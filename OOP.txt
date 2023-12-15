@@ -1,0 +1,79 @@
+Объектно-ориентированное программирование
+
+7.2. - В ранее подключенном MySQL создать базу данных с названием "HumanFriends".
+create database HumanFriends
+use database HumanFriends
+//Запросы на создание таблиц
+CREATE TABLE `Pets` (
+`ID` INT PRIMARY KEY AUTO_INCREMENT,
+`Name` VARCHAR(100),
+`Type` VARCHAR(100),
+`BirthDate` DATE,
+`Commands` VARCHAR(255)
+);
+
+CREATE TABLE `PackAnimals` (
+`ID` INT PRIMARY KEY AUTO_INCREMENT,
+`Name` VARCHAR(100),
+`Type` VARCHAR(100),
+`BirthDate` DATE,
+`Commands` VARCHAR(255)
+);
+//Заполняем таблицы записями
+INSERT INTO Pets (Name, Type, BirthDate, Commands) VALUES
+('Барсик', 'Кошка', '2018-05-10', 'Сидеть, Лежать, Лапу'),
+('Рекс', 'Собака', '2017-02-15', 'Сидеть, Фас, К ноге'),
+('Мурзик', 'Кошка', '2020-09-01', 'Гулять, Отдыхать, Лапу'),
+('Шарик', 'Собака', '2019-07-20', 'Сидеть, Фас, Голос'),
+('Лиза', 'Кошка', '2016-11-27', 'Сидеть, Лежать, Лапу');
+
+— Заполнение таблицы PackAnimals
+INSERT INTO PackAnimals (Name, Type, BirthDate, Commands) VALUES
+('Амелия', 'Верблюд', '2015-03-12', 'Идти, Стоять'),
+('Оскар', 'Осел', '2017-08-02', 'Тянуть, Перевозить'),
+('Луна', 'Лошадь', '2014-06-30', 'Скакать, Тянуть'),
+('Сахар', 'Верблюд', '2019-01-05', 'Идти, Стоять'),
+('Бриз', 'Лошадь', '2016-12-18', 'Скакать, Тянуть');
+
+-Удаление верблюдов
+DELETE FROM PackAnimals WHERE Type = 'Верблюд';
+
+-Объединяем таблицы лошади и ослов
+SELECT * FROM PackAnimals WHERE Type = 'Лошадь'
+UNION
+SELECT * FROM PackAnimals WHERE Type = 'Осел';
+
+-Создание таблицы с 1 до 3 лет и посчитать возраст в новой.
+CREATE TEMPORARY TABLE IF NOT EXISTS temp_animals (
+id INT AUTO_INCREMENT PRIMARY KEY,
+name VARCHAR(50),
+birth_date DATE
+);
+
+INSERT INTO temp_animals (name, birth_date)
+VALUES
+('Мурзик', '2019-04-01'),
+('Барсик', '2018-08-15'),
+('Леопольд', '2017-12-10'),
+('Том', '2020-02-20'),
+('Мася', '2019-11-05');
+
+SELECT
+name,
+TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) AS age_years,
+TIMESTAMPDIFF(MONTH, birth_date, CURDATE()) % 12 AS age_months
+FROM
+temp_animals
+WHERE
+TIMESTAMPDIFF(YEAR, birth_date, CURDATE()) BETWEEN 1 AND 3;
+
+SELECT * FROM yang_animal;
+
+-Объеденить все таблицы в одну
+SELECT * FROM Pets
+UNION ALL
+SELECT * FROM PackAnimals
+UNION ALL
+SELECT * FROM Animals_Age;
+
+
