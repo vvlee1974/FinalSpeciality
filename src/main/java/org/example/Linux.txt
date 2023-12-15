@@ -1,0 +1,65 @@
+1. Использование команды cat в Linux
+
+	- Создать два текстовых файла: "Pets"(Домашние животные) и "Pack
+	animals"(вьючные животные), используя команду `cat` в терминале Linux. В
+	первом файле перечислить собак, кошек и хомяков. Во втором — лошадей,
+	верблюдов и ослов.
+
+		sudo cat > Pets.txt
+		sudo cat > PackAnimals.txt
+		sudo nano Pets.txt
+			Собаки
+			Кошки
+			Хомячки
+		sudo nano PackAnimals.txt
+			Лошади
+			Верблюды
+			Ослы
+
+	- Объединить содержимое этих двух файлов в один и просмотреть его
+	содержимое.
+
+		sudo cat Pets.txt PackAnimals.txt > NewFile.txt
+		sudo nano NewFile.txt
+
+	- Переименовать получившийся файл в "Human Friends".
+
+		sudo mv NewFile.txt HumanFriends.txt
+
+
+2. Работа с директориями в Linux
+
+	- Создать новую директорию и переместить туда файл "Human Friends".
+
+		sudo mkdir /home/user/finalwork
+		sudo cp HumanFriends.txt /home/user/finalwork
+
+
+3. Работа с MySQL в Linux. “Установить MySQL на вашу вычислительную
+машину ”
+
+	- Подключить дополнительный репозиторий MySQL и установить один из
+	пакетов из этого репозитория.
+
+		sudo apt install mysql-server
+		sudo mysql_secure_installation
+			(сложность пароля выбираем - 0)
+		sudo mysql
+			SELECT user,authentication_string,plugin,host FROM mysql.user;
+			ALTER USER 'root'@'localhost' IDENTIFIED WITH caching_sha2_password BY '123456';
+			exit
+		mysql -u root -p
+			(вводим пароль - 123456)
+			CREATE USER 'newuser'@'localhost' IDENTIFIED BY '123456';
+			SELECT user,authentication_string,plugin,host FROM mysql.user;
+			exit
+
+
+
+4 Управление deb-пакетами
+	- Установить и затем удалить deb-пакет, используя команду `dpkg`.
+
+		wget https://download.virtualbox.org/virtualbox/7.0.10/virtualbox-7.0_7.0.10-158379~Ubuntu~jammy_amd64.deb
+		sudo dpkg -i virtualbox-7.0_7.0.10-158379~Ubuntu~jammy_amd64.deb
+		sudo apt -f install
+		sudo dpkg -r virtualbox-7.0_7.0.10-158379~Ubuntu~jammy_amd64.deb
